@@ -1,10 +1,13 @@
 import React from "react";
 import "./task.css";
 
-const Task = (props) => {
+const Task = ({id, post, onDelete}) => {
+
+
+
   return (
     <>
-      <li className="completed">
+      {/* <li className="completed">
         <div className="view">
           <input className="toggle" type="checkbox" />
           <label>
@@ -26,18 +29,19 @@ const Task = (props) => {
           <button className="icon icon-destroy"></button>
         </div>
         <input type="text" className="edit" value="Editing task" />
-      </li>
+      </li> */}
       <li>
         <div className="view">
           <input className="toggle" type="checkbox" />
           <label>
-            <span className="description">Active task</span>
+            <span className="description">{post}</span>
             <span className="created">created 5 minutes ago</span>
           </label>
           <button className="icon icon-edit"></button>
-          <button className="icon icon-destroy"></button>
+          <button className="icon icon-destroy" onClick={() => onDelete(id)}></button>
         </div>
       </li>
+   
     </>
   );
 };
