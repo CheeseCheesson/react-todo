@@ -2,7 +2,18 @@ import React from "react";
 import Task from "../task";
 import "./task-list.css";
 
-const TaskList = ({ posts, onDelete, onUpdate, editId, onChange, valueInput, onSavePost }) => {
+const TaskList = ({
+  posts,
+  onDelete,
+  onUpdate,
+  editId,
+  onChange,
+  valueInput,
+  onSavePost,
+  onStatus,
+  isStatus,
+  statusId
+}) => {
   return (
     <ul className="todo-list">
       {posts.map((item) => {
@@ -18,6 +29,9 @@ const TaskList = ({ posts, onDelete, onUpdate, editId, onChange, valueInput, onS
               onSavePost={onSavePost}
               editId={editId}
               valueInput={valueInput}
+              onStatus={onStatus}
+              isStatus={isStatus}
+              statusId = {statusId}
             />
           );
         }
