@@ -9,22 +9,18 @@ const Task = ({
   editId,
   onChange,
   valueInput,
-  onSavePost
+  onSavePost,
+  onStatus,
+  isStatus,
+  statusId
 }) => {
+console.log("isStatus",isStatus);
+
 
   return (
     <>
-      {editId == id ? (
+      {editId === id ? (
         <li className="editing">
-          {/* <div className="view">
-      <input className="toggle" type="checkbox" />
-      <label>
-        <span className="description">Editing task</span>
-        <span className="created">created 5 minutes ago</span>
-      </label>
-      <button className="icon icon-edit"></button>
-      <button className="icon icon-destroy"></button>
-    </div> */}
           <form onSubmit={(event)=>onSavePost(event, id)}>
             <input
               type="text"
@@ -35,9 +31,9 @@ const Task = ({
           </form>
         </li>
       ) : (
-        <li>
-          <div className="view">
-            <input className="toggle" type="checkbox" />
+        <li className={statusId === id &&  isStatus ? "completed" : ""}>
+          <div className='view'>
+            <input className="toggle" type="checkbox" onClick={() => onStatus(id)} />
             <label>
               <span className="description">{post}</span>
               <span className="created">created 5 minutes ago</span>
@@ -53,19 +49,6 @@ const Task = ({
           </div>
         </li>
       )}
-
-      {/* <li className="completed">
-        <div className="view">
-          <input className="toggle" type="checkbox" />
-          <label>
-            <span className="description">Completed task</span>
-            <span className="created">created 17 seconds ago</span>
-          </label>
-          <button className="icon icon-edit"></button>
-          <button className="icon icon-destroy"></button>
-        </div>
-      </li>
-      */}
     </>
   );
 };

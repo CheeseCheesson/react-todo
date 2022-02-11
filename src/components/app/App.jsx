@@ -11,8 +11,9 @@ const App = () => {
   });
   const [todoItem, setTodoItem] = useState([
     {
-      id: '',
+      id: "",
       post: "",
+      status: false,
     },
   ]);
   const handleInputChange = ({ target }) => {
@@ -33,23 +34,36 @@ const App = () => {
     setValueInput("");
   };
 
+  //? STATUS
+  const [statusId, setStatusId] = useState("");
+  const [isStatus, setIsStatus] = useState(false);
+  const handleChangeStatus = (id) => {
+    let newArrStatus = [...todoItem];
+    let newState = newArrStatus.map((item) => {
+      if (item.id === id) {
+        item.status = !item.status;
+        setIsStatus((prevState) => !prevState);
+        setStatusId(item.id)
+      }
+      return item;
+    });
+    setTodoItem(newState);
+  };
+
   //^ UPDATE
   const [editId, setEditId] = useState(null);
   const [editValue, setEditValue] = useState("");
-
-  const handleUpdate = (id, post) => {
+  const handleUpdatePost = (id, post) => {
     setEditId(id);
     setEditValue(post);
   };
-  const handleEditChange = ({ target }) => {
+  const handleEditPost = ({ target }) => {
     setEditValue(target.value);
   };
   const handleSavePost = (event, id) => {
     event.preventDefault();
-    let newArrPosts = [...todoItem]
-    console.log(newArrPosts);
+    let newArrPosts = [...todoItem];
     let newPostEdit = newArrPosts.map((item) => {
-      console.log(typeof id );
       if (item.id === id) {
         item.post = editValue;
       }
@@ -61,10 +75,10 @@ const App = () => {
 
   //! DELETE
   const handleDelete = (id) => {
-    console.log(id);
     const newTodoItem = todoItem.filter((post) => post.id !== id);
     setTodoItem(newTodoItem);
   };
+
   return (
     <section className="todoapp">
       <header className="header">
@@ -79,11 +93,14 @@ const App = () => {
         <TaskList
           posts={todoItem}
           onDelete={handleDelete}
-          onUpdate={handleUpdate}
+          onUpdate={handleUpdatePost}
           editId={editId}
-          onChange={handleEditChange}
+          onChange={handleEditPost}
           valueInput={editValue}
           onSavePost={handleSavePost}
+          onStatus={handleChangeStatus}
+          isStatus={isStatus}
+          statusId={statusId}
         />
         <Footer />
       </section>
