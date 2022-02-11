@@ -11,8 +11,7 @@ const Task = ({
   valueInput,
   onSavePost,
   onStatus,
-  isStatus,
-  statusId
+  isStatus
 }) => {
 console.log("isStatus",isStatus);
 
@@ -31,7 +30,7 @@ console.log("isStatus",isStatus);
           </form>
         </li>
       ) : (
-        <li className={statusId === id &&  isStatus ? "completed" : ""}>
+        <li className={  isStatus ? "completed" : ""}>
           <div className='view'>
             <input className="toggle" type="checkbox" onClick={() => onStatus(id)} />
             <label>

@@ -11,8 +11,6 @@ const TaskList = ({
   valueInput,
   onSavePost,
   onStatus,
-  isStatus,
-  statusId
 }) => {
   return (
     <ul className="todo-list">
@@ -30,8 +28,7 @@ const TaskList = ({
               editId={editId}
               valueInput={valueInput}
               onStatus={onStatus}
-              isStatus={isStatus}
-              statusId = {statusId}
+              isStatus={item.status}
             />
           );
         }

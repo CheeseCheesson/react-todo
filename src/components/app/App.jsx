@@ -35,18 +35,16 @@ const App = () => {
   };
 
   //? STATUS
-  const [statusId, setStatusId] = useState("");
-  const [isStatus, setIsStatus] = useState(false);
+
   const handleChangeStatus = (id) => {
     let newArrStatus = [...todoItem];
     let newState = newArrStatus.map((item) => {
       if (item.id === id) {
         item.status = !item.status;
-        setIsStatus((prevState) => !prevState);
-        setStatusId(item.id)
       }
       return item;
     });
+console.log(newState);
     setTodoItem(newState);
   };
 
@@ -99,8 +97,6 @@ const App = () => {
           valueInput={editValue}
           onSavePost={handleSavePost}
           onStatus={handleChangeStatus}
-          isStatus={isStatus}
-          statusId={statusId}
         />
         <Footer />
       </section>
