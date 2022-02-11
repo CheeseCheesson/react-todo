@@ -11,13 +11,8 @@ const App = () => {
   const [valueInput, setValueInput] = useState({
     todo: "",
   });
-  const [todoItem, setTodoItem] = useState([
-    {
-      id: "",
-      post: "",
-      status: false,
-    },
-  ]);
+  const [todoItem, setTodoItem] = useState([]);
+  const [todoItemDump, setTodoItemDump] = useState([]);
 
   const handleInputChange = ({ target }) => {
     let { name, value } = target;
@@ -36,6 +31,7 @@ const App = () => {
     };
     if (valueInput) {
       setTodoItem([...todoItem, newPost]);
+      setTodoItemDump([...todoItem, newPost]);
       setValueInput("");
     }
   };
@@ -48,8 +44,8 @@ const App = () => {
       }
       return item;
     });
-    console.log(newState);
     setTodoItem(newState);
+    setTodoItemDump(newState);
   };
   //^ UPDATE
   const [editId, setEditId] = useState(null);
@@ -71,17 +67,16 @@ const App = () => {
       return item;
     });
     setTodoItem(newPostEdit);
+    setTodoItemDump(newPostEdit);
     setEditId(null);
   };
   //! DELETE
   const handleDelete = (id) => {
     const newTodoItem = todoItem.filter((post) => post.id !== id);
     setTodoItem(newTodoItem);
+    setTodoItemDump(newTodoItem);
   };
   //! //////////////////////////////////////BLOCK MAIN //////////////////////////////////////////////
-
-  const countRemainder = calcLeftItems(todoItem);
-  console.log(countRemainder);
 
   //? //////////////////////////////////////FOOTER //////////////////////////////////////////////
   const [buttonValue, setButtonValue] = useState([
@@ -111,8 +106,37 @@ const App = () => {
       return item;
     });
     setButtonValue(newActive);
+
+    handelFilterItems(todoItem, name);
   };
 
+  const handelFilterItems = (todoItem = {}, name) => {
+    if (name === "Completed") {
+      let newFilterActive = [...todoItemDump].filter(
+        (todoItem) => todoItem.status === true
+      );
+      setTodoItem(newFilterActive);
+      return;
+    }
+
+    if (name === "Active") {
+      let newFilterActive = [...todoItemDump].filter(
+        (todoItem) => todoItem.status === false
+      );
+      setTodoItem(newFilterActive);
+      return;
+    }
+    if (name === "All") {
+      let newFilterActive = [...todoItemDump].filter((todoItem) => todoItem);
+      setTodoItem(newFilterActive);
+      return;
+    }
+  };
+
+  const handleClear = () => {
+    setTodoItem([]);
+    setTodoItemDump([]);
+  };
   //? //////////////////////////////////////FOOTER //////////////////////////////////////////////
 
   return (
@@ -140,6 +164,7 @@ const App = () => {
           buttonValue={buttonValue}
           onChangeFilterButton={handleSelectFilter}
           countLeft={calcLeftItems(todoItem)}
+          onClear={handleClear}
         />
       </section>
     </section>

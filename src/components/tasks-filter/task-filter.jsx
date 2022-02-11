@@ -1,7 +1,7 @@
 import React from "react";
 
 const TaskFilter = ({ buttonValue, onChangeFilterButton }) => {
-  console.log(buttonValue);
+
   return (
     <ul className="filters">
       {buttonValue && buttonValue.map((item) => (
