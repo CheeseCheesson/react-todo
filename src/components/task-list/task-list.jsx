@@ -21,6 +21,7 @@ const TaskList = ({
               key={item.id}
               id={item.id}
               post={item.post}
+              isStatus={item.status}
               onDelete={onDelete}
               onUpdate={onUpdate}
               onChange={onChange}
@@ -28,7 +29,7 @@ const TaskList = ({
               editId={editId}
               valueInput={valueInput}
               onStatus={onStatus}
-              isStatus={item.status}
+             
             />
           );
         }

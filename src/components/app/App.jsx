@@ -3,8 +3,10 @@ import Footer from "../footer/footer";
 import NewTaskForm from "../new-task-form";
 import TaskList from "../task-list";
 import "./App.css";
+import { calcLeftItems } from "../utils/itemsLeftCounters";
 
 const App = () => {
+  //! //////////////////////////////////////BLOCK MAIN //////////////////////////////////////////////
   //& CREATE
   const [valueInput, setValueInput] = useState({
     todo: "",
@@ -16,6 +18,7 @@ const App = () => {
       status: false,
     },
   ]);
+
   const handleInputChange = ({ target }) => {
     let { name, value } = target;
     setValueInput((prevState) => ({
@@ -29,13 +32,14 @@ const App = () => {
     const newPost = {
       id: Date.now().toString().slice(-6),
       post: valueInput.todo,
+      status: false,
     };
-    setTodoItem([...todoItem, newPost]);
-    setValueInput("");
+    if (valueInput) {
+      setTodoItem([...todoItem, newPost]);
+      setValueInput("");
+    }
   };
-
   //? STATUS
-
   const handleChangeStatus = (id) => {
     let newArrStatus = [...todoItem];
     let newState = newArrStatus.map((item) => {
@@ -44,10 +48,9 @@ const App = () => {
       }
       return item;
     });
-console.log(newState);
+    console.log(newState);
     setTodoItem(newState);
   };
-
   //^ UPDATE
   const [editId, setEditId] = useState(null);
   const [editValue, setEditValue] = useState("");
@@ -70,12 +73,47 @@ console.log(newState);
     setTodoItem(newPostEdit);
     setEditId(null);
   };
-
   //! DELETE
   const handleDelete = (id) => {
     const newTodoItem = todoItem.filter((post) => post.id !== id);
     setTodoItem(newTodoItem);
   };
+  //! //////////////////////////////////////BLOCK MAIN //////////////////////////////////////////////
+
+  const countRemainder = calcLeftItems(todoItem);
+  console.log(countRemainder);
+
+  //? //////////////////////////////////////FOOTER //////////////////////////////////////////////
+  const [buttonValue, setButtonValue] = useState([
+    {
+      id: 1,
+      name: "All",
+      active: false,
+    },
+    {
+      id: 2,
+      name: "Active",
+      active: false,
+    },
+    {
+      id: 3,
+      name: "Completed",
+      active: false,
+    },
+  ]);
+  const handleSelectFilter = (name) => {
+    let newActive = [...buttonValue].map((item) => {
+      if (item.name === name) {
+        item.active = !item.active;
+      } else if (item.name !== name) {
+        item.active = false;
+      }
+      return item;
+    });
+    setButtonValue(newActive);
+  };
+
+  //? //////////////////////////////////////FOOTER //////////////////////////////////////////////
 
   return (
     <section className="todoapp">
@@ -98,7 +136,11 @@ console.log(newState);
           onSavePost={handleSavePost}
           onStatus={handleChangeStatus}
         />
-        <Footer />
+        <Footer
+          buttonValue={buttonValue}
+          onChangeFilterButton={handleSelectFilter}
+          countLeft={calcLeftItems(todoItem)}
+        />
       </section>
     </section>
   );

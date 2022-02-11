@@ -11,16 +11,14 @@ const Task = ({
   valueInput,
   onSavePost,
   onStatus,
-  isStatus
+  isStatus,
 }) => {
-console.log("isStatus",isStatus);
-
 
   return (
     <>
       {editId === id ? (
         <li className="editing">
-          <form onSubmit={(event)=>onSavePost(event, id)}>
+          <form onSubmit={(event) => onSavePost(event, id)}>
             <input
               type="text"
               className="edit"
@@ -30,15 +28,20 @@ console.log("isStatus",isStatus);
           </form>
         </li>
       ) : (
-        <li className={  isStatus ? "completed" : ""}>
-          <div className='view'>
-            <input className="toggle" type="checkbox" onClick={() => onStatus(id)} />
+        <li className={isStatus ? "completed" : ""}>
+          <div className="view">
+            <input
+              className="toggle"
+              type="checkbox"
+              onClick={() => onStatus(id)}
+            />
             <label>
               <span className="description">{post}</span>
               <span className="created">created 5 minutes ago</span>
             </label>
             <button
               className="icon icon-edit"
+              disabled={isStatus}
               onClick={() => onUpdate(id, post)}
             ></button>
             <button
