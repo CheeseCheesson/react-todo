@@ -1,10 +1,60 @@
 import React from "react";
 import "./task.css";
 
-const Task = (props) => {
+const Task = ({
+  id,
+  post,
+  onDelete,
+  onUpdate,
+  editId,
+  onChange,
+  valueInput,
+  onSavePost
+}) => {
+
   return (
     <>
-      <li className="completed">
+      {editId == id ? (
+        <li className="editing">
+          {/* <div className="view">
+      <input className="toggle" type="checkbox" />
+      <label>
+        <span className="description">Editing task</span>
+        <span className="created">created 5 minutes ago</span>
+      </label>
+      <button className="icon icon-edit"></button>
+      <button className="icon icon-destroy"></button>
+    </div> */}
+          <form onSubmit={(event)=>onSavePost(event, id)}>
+            <input
+              type="text"
+              className="edit"
+              value={valueInput}
+              onChange={onChange}
+            />
+          </form>
+        </li>
+      ) : (
+        <li>
+          <div className="view">
+            <input className="toggle" type="checkbox" />
+            <label>
+              <span className="description">{post}</span>
+              <span className="created">created 5 minutes ago</span>
+            </label>
+            <button
+              className="icon icon-edit"
+              onClick={() => onUpdate(id, post)}
+            ></button>
+            <button
+              className="icon icon-destroy"
+              onClick={() => onDelete(id)}
+            ></button>
+          </div>
+        </li>
+      )}
+
+      {/* <li className="completed">
         <div className="view">
           <input className="toggle" type="checkbox" />
           <label>
@@ -15,29 +65,7 @@ const Task = (props) => {
           <button className="icon icon-destroy"></button>
         </div>
       </li>
-      <li className="editing">
-        <div className="view">
-          <input className="toggle" type="checkbox" />
-          <label>
-            <span className="description">Editing task</span>
-            <span className="created">created 5 minutes ago</span>
-          </label>
-          <button className="icon icon-edit"></button>
-          <button className="icon icon-destroy"></button>
-        </div>
-        <input type="text" className="edit" value="Editing task" />
-      </li>
-      <li>
-        <div className="view">
-          <input className="toggle" type="checkbox" />
-          <label>
-            <span className="description">Active task</span>
-            <span className="created">created 5 minutes ago</span>
-          </label>
-          <button className="icon icon-edit"></button>
-          <button className="icon icon-destroy"></button>
-        </div>
-      </li>
+      */}
     </>
   );
 };
