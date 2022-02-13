@@ -11,10 +11,16 @@ const TaskList = ({
   valueInput,
   onSavePost,
   onStatus,
+  filtred
 }) => {
+  console.log("filtred", filtred);
+  const todos = filtred ? filtred : posts
+  console.log("todos", todos);
   return (
     <ul className="todo-list">
-      {posts.map((item) => {
+      {
+
+        todos.map((item) => {
         if (item.post) {
           return (
             <Task
@@ -29,7 +35,6 @@ const TaskList = ({
               editId={editId}
               valueInput={valueInput}
               onStatus={onStatus}
-             
             />
           );
         }

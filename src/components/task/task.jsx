@@ -13,7 +13,6 @@ const Task = ({
   onStatus,
   isStatus,
 }) => {
-
   return (
     <>
       {editId === id ? (
@@ -33,6 +32,7 @@ const Task = ({
             <input
               className="toggle"
               type="checkbox"
+              defaultChecked={isStatus}
               onClick={() => onStatus(id)}
             />
             <label>

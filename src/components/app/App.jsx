@@ -12,7 +12,6 @@ const App = () => {
     todo: "",
   });
   const [todoItem, setTodoItem] = useState([]);
-  const [todoItemDump, setTodoItemDump] = useState([]);
 
   const handleInputChange = ({ target }) => {
     let { name, value } = target;
@@ -31,7 +30,6 @@ const App = () => {
     };
     if (valueInput) {
       setTodoItem([...todoItem, newPost]);
-      setTodoItemDump([...todoItem, newPost]);
       setValueInput("");
     }
   };
@@ -45,7 +43,6 @@ const App = () => {
       return item;
     });
     setTodoItem(newState);
-    setTodoItemDump(newState);
   };
   //^ UPDATE
   const [editId, setEditId] = useState(null);
@@ -67,15 +64,9 @@ const App = () => {
       return item;
     });
     setTodoItem(newPostEdit);
-    setTodoItemDump(newPostEdit);
     setEditId(null);
   };
-  //! DELETE
-  const handleDelete = (id) => {
-    const newTodoItem = todoItem.filter((post) => post.id !== id);
-    setTodoItem(newTodoItem);
-    setTodoItemDump(newTodoItem);
-  };
+
   //! //////////////////////////////////////BLOCK MAIN //////////////////////////////////////////////
 
   //? //////////////////////////////////////FOOTER //////////////////////////////////////////////
@@ -96,6 +87,7 @@ const App = () => {
       active: false,
     },
   ]);
+  const [filtred, setFiltred] = useState();
   const handleSelectFilter = (name) => {
     let newActive = [...buttonValue].map((item) => {
       if (item.name === name) {
@@ -107,35 +99,63 @@ const App = () => {
     });
     setButtonValue(newActive);
 
-    handelFilterItems(todoItem, name);
+    handelFilterItems(name);
   };
 
-  const handelFilterItems = (todoItem = {}, name) => {
-    if (name === "Completed") {
-      let newFilterActive = [...todoItemDump].filter(
-        (todoItem) => todoItem.status === true
-      );
-      setTodoItem(newFilterActive);
-      return;
-    }
+  function filter(name) {
+    let newFilterActive = [...todoItem].filter(
+      (item) =>
+        item.status ===
+        (name === "Active" ? false : name === "Completed" ? true : null)
+    );
+    console.log(newFilterActive);
+    return newFilterActive;
+  }
 
-    if (name === "Active") {
-      let newFilterActive = [...todoItemDump].filter(
-        (todoItem) => todoItem.status === false
-      );
-      setTodoItem(newFilterActive);
-      return;
-    }
-    if (name === "All") {
-      let newFilterActive = [...todoItemDump].filter((todoItem) => todoItem);
-      setTodoItem(newFilterActive);
-      return;
+  const handelFilterItems = (name) => {
+    switch (name) {
+      case "All":
+        setTodoItem(todoItem);
+        setFiltred(null);
+        break;
+      case "Active":
+        setFiltred(filter(name));
+        break;
+      case "Completed":
+        setFiltred(filter(name));
+        break;
+      default:
+        break;
     }
   };
 
+  //! DELETE
+  const handleDelete = (id) => {
+    if (filtred) {
+      for (const item of filtred) {
+        if (!item.status) {
+          const newFilterCheked = [...todoItem].filter(
+            (post) => post.id !== id && !post.status
+          );
+          console.log("newFilterCheked", newFilterCheked);
+          setFiltred(newFilterCheked);
+        }
+        if (item.status) {
+          const newFilterCheked = [...todoItem].filter(
+            (post) => post.id !== id && post.status
+          );
+          console.log("newFilterCheked", newFilterCheked);
+          setFiltred(newFilterCheked);
+        }
+      }
+    }
+
+    const newTodoItem = todoItem.filter((post) => post.id !== id);
+    setTodoItem(newTodoItem);
+  };
+  //! clear
   const handleClear = () => {
     setTodoItem([]);
-    setTodoItemDump([]);
   };
   //? //////////////////////////////////////FOOTER //////////////////////////////////////////////
 
@@ -159,6 +179,7 @@ const App = () => {
           valueInput={editValue}
           onSavePost={handleSavePost}
           onStatus={handleChangeStatus}
+          filtred={filtred}
         />
         <Footer
           buttonValue={buttonValue}
