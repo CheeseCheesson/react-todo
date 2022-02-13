@@ -2,6 +2,7 @@ import React from "react";
 import "./task.css";
 import Result from "../utils/timer";
 import PropTypes from "prop-types";
+import TextAria from "../text-aria";
 
 const Task = ({
   id,
@@ -20,12 +21,7 @@ const Task = ({
       {editId === id ? (
         <li className="editing">
           <form onSubmit={(event) => onSavePost(event, id)}>
-            <input
-              type="text"
-              className="edit"
-              value={valueInput}
-              onChange={onChange}
-            />
+            <TextAria type="text" classValue='edit' onChange={onChange}/>
           </form>
         </li>
       ) : (

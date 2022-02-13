@@ -54,16 +54,6 @@ const App = () => {
           status: false,
         },
       ]);
-      if (filtred) {
-        setFiltred([
-          ...filtred,
-          {
-            id: Date.now().toString().slice(-6),
-            post: valueInput.todo,
-            status: false,
-          },
-        ]);
-      }
       setValueInput("");
     }
   };
@@ -126,11 +116,9 @@ const App = () => {
         setFiltred(null);
         break;
       case "Active":
-        setFiltred(filter(name));
-        break;
+        return setFiltred(filter(name));
       case "Completed":
-        setFiltred(filter(name));
-        break;
+        return setFiltred(filter(name));
       default:
         break;
     }
