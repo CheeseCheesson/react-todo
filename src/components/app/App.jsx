@@ -5,6 +5,7 @@ import TaskList from "../task-list";
 import "./App.css";
 import { calcLeftItems } from "../utils/itemsLeftCounters";
 
+
 const App = () => {
   //! //////////////////////////////////////BLOCK MAIN //////////////////////////////////////////////
   //& CREATE
@@ -44,7 +45,7 @@ const App = () => {
     });
     setTodoItem(newState);
   };
-  //^ UPDATE
+  //^ UPDATEs
   const [editId, setEditId] = useState(null);
   const [editValue, setEditValue] = useState("");
   const handleUpdatePost = (id, post) => {

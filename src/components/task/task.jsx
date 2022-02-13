@@ -1,5 +1,6 @@
 import React from "react";
 import "./task.css";
+import Result from "../utils/timer";
 
 const Task = ({
   id,
@@ -37,7 +38,7 @@ const Task = ({
             />
             <label>
               <span className="description">{post}</span>
-              <span className="created">created 5 minutes ago</span>
+              <span className="created">created: {Result} </span>
             </label>
             <button
               className="icon icon-edit"
