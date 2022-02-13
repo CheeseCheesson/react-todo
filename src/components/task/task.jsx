@@ -1,6 +1,7 @@
 import React from "react";
 import "./task.css";
 import Result from "../utils/timer";
+import PropTypes from "prop-types";
 
 const Task = ({
   id,
@@ -55,5 +56,16 @@ const Task = ({
     </>
   );
 };
-
+Task.propTypes = {
+  id: PropTypes.string,
+  post: PropTypes.string,
+  editId: PropTypes.string,
+  isStatus: PropTypes.bool,
+  valueInput: PropTypes.string,
+  onDelete: PropTypes.func,
+  onUpdate: PropTypes.func,
+  onChange: PropTypes.func,
+  onSavePost: PropTypes.func,
+  onStatus: PropTypes.func,
+};
 export default Task;
