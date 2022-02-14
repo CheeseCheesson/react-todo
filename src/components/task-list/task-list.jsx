@@ -1,7 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import Task from '../task'
 import './task-list.css'
-import PropTypes from 'prop-types'
 
 const TaskList = ({ posts, onDelete, onUpdate, editId, onChange, valueInput, onSavePost, onStatus, filtred }) => {
   console.log('filtred', filtred)

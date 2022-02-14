@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import './task.css'
-import PropTypes from 'prop-types'
-import TextAria from '../text-aria'
 import { formatDistanceToNow } from 'date-fns'
+import PropTypes from 'prop-types'
+
+import './task.css'
+import TextAria from '../text-aria'
 
 const Task = ({ id, post, onDelete, onUpdate, editId, onChange, onSavePost, onStatus, isStatus }) => {
   const createdTime = new Date()

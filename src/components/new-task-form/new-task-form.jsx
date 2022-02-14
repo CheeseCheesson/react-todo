@@ -1,8 +1,9 @@
 /* eslint-disable no-restricted-globals */
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import TextAria from '../text-aria'
 import './new-task-form.css'
-import PropTypes from 'prop-types'
 
 const NewTaskForm = ({ valueInput, onChange, onSubmit }) => {
   return (
