@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import "./task.css";
-import PropTypes from "prop-types";
-import TextAria from "../text-aria";
-import { formatDistanceToNow } from "date-fns";
+import React, { useState, useEffect } from "react"
+import "./task.css"
+import PropTypes from "prop-types"
+import TextAria from "../text-aria"
+import { formatDistanceToNow } from "date-fns"
 
 const Task = ({
   id,
@@ -15,18 +15,18 @@ const Task = ({
   onStatus,
   isStatus,
 }) => {
-  const createdTime = new Date();
+  const createdTime = new Date()
   const [timer, setTimer] = useState(
     formatDistanceToNow(createdTime, { includeSeconds: true })
-  );
+  )
   const timerUpdate = () => {
-    setTimer(() => formatDistanceToNow(createdTime, { includeSeconds: true }));
-  };
+    setTimer(() => formatDistanceToNow(createdTime, { includeSeconds: true }))
+  }
 
   useEffect(() => {
-    const intervalId = setInterval(() => timerUpdate(), 1000);
-    return () => clearInterval(intervalId);
-  }, []);
+    const intervalId = setInterval(() => timerUpdate(), 1000)
+    return () => clearInterval(intervalId)
+  }, [])
 
   return (
     <>
@@ -62,8 +62,8 @@ const Task = ({
         </li>
       )}
     </>
-  );
-};
+  )
+}
 Task.propTypes = {
   id: PropTypes.string,
   post: PropTypes.string,
@@ -75,5 +75,5 @@ Task.propTypes = {
   onChange: PropTypes.func,
   onSavePost: PropTypes.func,
   onStatus: PropTypes.func,
-};
-export default Task;
+}
+export default Task

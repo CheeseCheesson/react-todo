@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from "react"
+import PropTypes from "prop-types"
 
 const TextAria = ({ name, value, type, classValue, placeHolder, onChange }) => {
   return (
@@ -12,12 +12,12 @@ const TextAria = ({ name, value, type, classValue, placeHolder, onChange }) => {
       type={type}
       autoFocus
     />
-  );
-};
+  )
+}
 TextAria.defaultProps = {
   onChange: () => {},
   type: "text",
-};
+}
 TextAria.propTypes = {
   name: PropTypes.string,
   value: PropTypes.string,
@@ -25,5 +25,5 @@ TextAria.propTypes = {
   classValue: PropTypes.string,
   placeHolder: PropTypes.string,
   onChange: PropTypes.func,
-};
-export default TextAria;
+}
+export default TextAria

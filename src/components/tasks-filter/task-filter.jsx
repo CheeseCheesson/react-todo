@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from "react"
+import PropTypes from "prop-types"
 const TaskFilter = ({ buttonValue, onChangeFilterButton }) => {
   return (
     <ul className="filters">
@@ -15,10 +15,10 @@ const TaskFilter = ({ buttonValue, onChangeFilterButton }) => {
           </li>
         ))}
     </ul>
-  );
-};
+  )
+}
 TaskFilter.propTypes = {
   buttonValue: PropTypes.array,
   onChangeFilterButton: PropTypes.func,
-};
-export default TaskFilter;
+}
+export default TaskFilter

@@ -1,7 +1,7 @@
-import React from "react";
-import Task from "../task";
-import "./task-list.css";
-import PropTypes from "prop-types";
+import React from "react"
+import Task from "../task"
+import "./task-list.css"
+import PropTypes from "prop-types"
 
 const TaskList = ({
   posts,
@@ -14,9 +14,9 @@ const TaskList = ({
   onStatus,
   filtred,
 }) => {
-  console.log("filtred", filtred);
-  const todos = filtred ? filtred : posts;
-  console.log("todos", todos);
+  console.log("filtred", filtred)
+  const todos = filtred ? filtred : posts
+  console.log("todos", todos)
   return (
     <ul className="todo-list">
       {todos.map((item) => {
@@ -35,13 +35,13 @@ const TaskList = ({
               valueInput={valueInput}
               onStatus={onStatus}
             />
-          );
+          )
         }
-        return null;
+        return null
       })}
     </ul>
-  );
-};
+  )
+}
 Task.propTypes = {
   posts: PropTypes.array,
   onDelete: PropTypes.func,
@@ -52,5 +52,5 @@ Task.propTypes = {
   onSavePost: PropTypes.func,
   onStatus: PropTypes.func,
   filtred: PropTypes.array,
-};
-export default TaskList;
+}
+export default TaskList

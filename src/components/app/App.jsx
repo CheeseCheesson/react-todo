@@ -1,162 +1,151 @@
-import React, { useState } from "react";
-import Footer from "../footer/footer";
-import NewTaskForm from "../new-task-form";
-import TaskList from "../task-list";
-import "./App.css";
-import { calcLeftItems } from "../utils/itemsLeftCounters";
+import React, { useState } from 'react'
+import Footer from '../footer/footer'
+import NewTaskForm from '../new-task-form'
+import TaskList from '../task-list'
+import './App.css'
+import { calcLeftItems } from '../utils/itemsLeftCounters'
 
 const App = () => {
   //& create
   const [valueInput, setValueInput] = useState({
-    todo: "",
-  });
-  const [todoItem, setTodoItem] = useState([]);
+    todo: '',
+  })
+  const [todoItem, setTodoItem] = useState([])
   //^ edit/update
-  const [editId, setEditId] = useState(null);
-  const [editValue, setEditValue] = useState("");
+  const [editId, setEditId] = useState(null)
+  const [editValue, setEditValue] = useState('')
   //* filter
   const initialButton = [
     {
       id: 1,
-      name: "All",
+      name: 'All',
       active: false,
     },
     {
       id: 2,
-      name: "Active",
+      name: 'Active',
       active: false,
     },
     {
       id: 3,
-      name: "Completed",
+      name: 'Completed',
       active: false,
     },
-  ];
-  const [buttonValue, setButtonValue] = useState(initialButton);
-  const [filtred, setFiltred] = useState();
+  ]
+  const [buttonValue, setButtonValue] = useState(initialButton)
+  const [filtred, setFiltred] = useState()
 
   //! main
   const handleInputChange = ({ target }) => {
-    let { name, value } = target;
+    let { name, value } = target
     setValueInput((prevState) => ({
       ...prevState,
       [name]: value,
-    }));
-  };
+    }))
+  }
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     if (valueInput) {
-      setTodoItem(
-        [
+      setTodoItem([
         ...todoItem,
         {
           id: Date.now().toString().slice(-6),
           post: valueInput.todo,
           status: false,
         },
-      ]);
-      setValueInput("");
+      ])
+      setValueInput('')
     }
-  };
+  }
   //* STATUS
   const handleChangeStatus = (id) => {
     let newState = [...todoItem].map((item) => {
       if (item.id === id) {
-        item.status = !item.status;
+        item.status = !item.status
       }
-      return item;
-    });
-    setTodoItem(newState);
-  };
+      return item
+    })
+    setTodoItem(newState)
+  }
 
   //^ update
   const handleUpdatePost = (id, post) => {
-    setEditId(id);
-    setEditValue(post);
-  };
+    setEditId(id)
+    setEditValue(post)
+  }
   const handleEditPost = ({ target }) => {
-    setEditValue(target.value);
-  };
+    setEditValue(target.value)
+  }
   const handleSavePost = (event, id) => {
-    event.preventDefault();
+    event.preventDefault()
     let newPostEdit = [...todoItem].map((item) => {
       if (item.id === id) {
-        item.post = editValue;
+        item.post = editValue
       }
-      return item;
-    });
-    setTodoItem(newPostEdit);
-    setEditId(null);
-  };
+      return item
+    })
+    setTodoItem(newPostEdit)
+    setEditId(null)
+  }
 
   //? footer
   const handleSelectFilter = (name) => {
     let newActive = [...buttonValue].map((item) => {
       if (item.name === name) {
-        item.active = !item.active;
+        item.active = !item.active
       } else if (item.name !== name) {
-        item.active = false;
+        item.active = false
       }
-      return item;
-    });
-    setButtonValue(newActive);
-    handelFilterItems(name);
-  };
+      return item
+    })
+    setButtonValue(newActive)
+    handelFilterItems(name)
+  }
   function filter(name) {
     return [...todoItem].filter(
-      (item) =>
-        item.status ===
-        (name === "Active" ? false : name === "Completed" ? true : null)
-    );
+      (item) => item.status === (name === 'Active' ? false : name === 'Completed' ? true : null)
+    )
   }
 
   const handelFilterItems = (name) => {
     switch (name) {
-      case "All":
-        setTodoItem(todoItem);
-        setFiltred(null);
-        break;
-      case "Active":
-        return setFiltred(filter(name));
-      case "Completed":
-        return setFiltred(filter(name));
+      case 'All':
+        setTodoItem(todoItem)
+        setFiltred(null)
+        break
+      case 'Active':
+        return setFiltred(filter(name))
+      case 'Completed':
+        return setFiltred(filter(name))
       default:
-        break;
+        break
     }
-  };
+  }
 
   //! delete/clear
   const handleDelete = (id) => {
     if (filtred) {
       for (const item of filtred) {
         if (!item.status) {
-          setFiltred(
-            [...todoItem].filter((post) => post.id !== id && !post.status)
-          );
+          setFiltred([...todoItem].filter((post) => post.id !== id && !post.status))
         }
         if (item.status) {
-          setFiltred(
-            [...todoItem].filter((post) => post.id !== id && post.status)
-          );
+          setFiltred([...todoItem].filter((post) => post.id !== id && post.status))
         }
       }
     }
-    setTodoItem([...todoItem].filter((post) => post.id !== id));
-  };
+    setTodoItem([...todoItem].filter((post) => post.id !== id))
+  }
   const handleClear = () => {
-    setTodoItem([]);
-    setFiltred([]);
-  };
+    setTodoItem([])
+    setFiltred([])
+  }
 
   return (
     <section className="todoapp">
       <header className="header">
         <h1>todos</h1>
-        <NewTaskForm
-          valueInput={valueInput?.todo}
-          onChange={handleInputChange}
-          onSubmit={handleSubmit}
-        />
+        <NewTaskForm valueInput={valueInput?.todo} onChange={handleInputChange} onSubmit={handleSubmit} />
       </header>
       <section className="main">
         <TaskList
@@ -178,7 +167,7 @@ const App = () => {
         />
       </section>
     </section>
-  );
-};
+  )
+}
 
-export default App;
+export default App

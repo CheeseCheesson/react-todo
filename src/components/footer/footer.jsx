@@ -1,7 +1,7 @@
-import React from "react";
-import TaskFilter from "../tasks-filter";
-import "./footer.css";
-import PropTypes from "prop-types";
+import React from "react"
+import TaskFilter from "../tasks-filter"
+import "./footer.css"
+import PropTypes from "prop-types"
 const Footer = ({ countLeft, onChangeFilterButton, buttonValue, onClear }) => {
   return (
     <footer className="footer">
@@ -14,12 +14,12 @@ const Footer = ({ countLeft, onChangeFilterButton, buttonValue, onClear }) => {
         Clear completed
       </button>
     </footer>
-  );
-};
+  )
+}
 Footer.propTypes = {
   countLeft: PropTypes.number,
   onChangeFilterButton: PropTypes.func,
   buttonValue: PropTypes.array,
   onClear: PropTypes.func,
-};
-export default Footer;
+}
+export default Footer
