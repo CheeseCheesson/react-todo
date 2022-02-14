@@ -1,7 +1,7 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-const TextAria = ({ name, value, type, classValue, placeHolder, onChange}) => {
+const TextAria = ({ name, value, type, classValue, placeHolder, onChange }) => {
   return (
     <input
       onChange={onChange}
@@ -14,12 +14,16 @@ const TextAria = ({ name, value, type, classValue, placeHolder, onChange}) => {
     />
   );
 };
-TextAria.propTypes  ={
+TextAria.defaultProps = {
+  onChange: () => {},
+  type: "text",
+};
+TextAria.propTypes = {
   name: PropTypes.string,
   value: PropTypes.string,
   type: PropTypes.string,
   classValue: PropTypes.string,
   placeHolder: PropTypes.string,
-  onChange: PropTypes.func
-}
+  onChange: PropTypes.func,
+};
 export default TextAria;

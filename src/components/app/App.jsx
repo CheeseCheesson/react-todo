@@ -46,7 +46,8 @@ const App = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (valueInput) {
-      setTodoItem([
+      setTodoItem(
+        [
         ...todoItem,
         {
           id: Date.now().toString().slice(-6),

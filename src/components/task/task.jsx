@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./task.css";
-import Result from "../utils/timer";
 import PropTypes from "prop-types";
 import TextAria from "../text-aria";
+import { formatDistanceToNow } from "date-fns";
 
 const Task = ({
   id,
@@ -11,17 +11,29 @@ const Task = ({
   onUpdate,
   editId,
   onChange,
-  valueInput,
   onSavePost,
   onStatus,
   isStatus,
 }) => {
+  const createdTime = new Date();
+  const [timer, setTimer] = useState(
+    formatDistanceToNow(createdTime, { includeSeconds: true })
+  );
+  const timerUpdate = () => {
+    setTimer(() => formatDistanceToNow(createdTime, { includeSeconds: true }));
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => timerUpdate(), 1000);
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <>
       {editId === id ? (
         <li className="editing">
           <form onSubmit={(event) => onSavePost(event, id)}>
-            <TextAria type="text" classValue='edit' onChange={onChange}/>
+            <TextAria type="text" classValue="edit" onChange={onChange} />
           </form>
         </li>
       ) : (
@@ -35,7 +47,7 @@ const Task = ({
             />
             <label>
               <span className="description">{post}</span>
-              <span className="created">created: {Result} </span>
+              <span className="created">created: {timer} ego </span>
             </label>
             <button
               className="icon icon-edit"
