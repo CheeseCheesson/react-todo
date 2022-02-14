@@ -15,6 +15,7 @@ const Task = ({ id, post, onDelete, onUpdate, editId, onChange, onSavePost, onSt
   useEffect(() => {
     const intervalId = setInterval(() => timerUpdate(), 1000)
     return () => clearInterval(intervalId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
