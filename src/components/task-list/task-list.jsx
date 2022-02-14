@@ -1,7 +1,7 @@
-import React from "react"
-import Task from "../task"
-import "./task-list.css"
-import PropTypes from "prop-types"
+import React from 'react'
+import Task from '../task'
+import './task-list.css'
+import PropTypes from 'prop-types'
 
 const TaskList = ({
   posts,
@@ -14,11 +14,11 @@ const TaskList = ({
   onStatus,
   filtred,
 }) => {
-  console.log("filtred", filtred)
+  console.log('filtred', filtred)
   const todos = filtred ? filtred : posts
-  console.log("todos", todos)
+  console.log('todos', todos)
   return (
-    <ul className="todo-list">
+    <ul className='todo-list'>
       {todos.map((item) => {
         if (item.post) {
           return (

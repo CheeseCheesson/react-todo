@@ -1,5 +1,5 @@
-import React from "react"
-import PropTypes from "prop-types"
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const TextAria = ({ name, value, type, classValue, placeHolder, onChange }) => {
   return (
@@ -16,7 +16,7 @@ const TextAria = ({ name, value, type, classValue, placeHolder, onChange }) => {
 }
 TextAria.defaultProps = {
   onChange: () => {},
-  type: "text",
+  type: 'text',
 }
 TextAria.propTypes = {
   name: PropTypes.string,
