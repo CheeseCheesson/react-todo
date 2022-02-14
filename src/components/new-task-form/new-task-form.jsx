@@ -8,11 +8,11 @@ const NewTaskForm = ({ valueInput, onChange, onSubmit }) => {
   return (
     <form onSubmit={onSubmit}>
       <TextAria
-        name='todo'
-        type='text'
+        name="todo"
+        type="text"
         value={valueInput || ''}
-        classValue='new-todo'
-        placeHolder='What needs to be done?'
+        classValue="new-todo"
+        placeHolder="What needs to be done?"
         onChange={onChange}
       />
     </form>

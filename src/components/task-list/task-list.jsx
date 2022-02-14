@@ -3,22 +3,12 @@ import Task from '../task'
 import './task-list.css'
 import PropTypes from 'prop-types'
 
-const TaskList = ({
-  posts,
-  onDelete,
-  onUpdate,
-  editId,
-  onChange,
-  valueInput,
-  onSavePost,
-  onStatus,
-  filtred,
-}) => {
+const TaskList = ({ posts, onDelete, onUpdate, editId, onChange, valueInput, onSavePost, onStatus, filtred }) => {
   console.log('filtred', filtred)
   const todos = filtred ? filtred : posts
   console.log('todos', todos)
   return (
-    <ul className='todo-list'>
+    <ul className="todo-list">
       {todos.map((item) => {
         if (item.post) {
           return (

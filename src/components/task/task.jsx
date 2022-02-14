@@ -4,21 +4,9 @@ import PropTypes from 'prop-types'
 import TextAria from '../text-aria'
 import { formatDistanceToNow } from 'date-fns'
 
-const Task = ({
-  id,
-  post,
-  onDelete,
-  onUpdate,
-  editId,
-  onChange,
-  onSavePost,
-  onStatus,
-  isStatus,
-}) => {
+const Task = ({ id, post, onDelete, onUpdate, editId, onChange, onSavePost, onStatus, isStatus }) => {
   const createdTime = new Date()
-  const [timer, setTimer] = useState(
-    formatDistanceToNow(createdTime, { includeSeconds: true })
-  )
+  const [timer, setTimer] = useState(formatDistanceToNow(createdTime, { includeSeconds: true }))
   const timerUpdate = () => {
     setTimer(() => formatDistanceToNow(createdTime, { includeSeconds: true }))
   }
@@ -31,33 +19,21 @@ const Task = ({
   return (
     <>
       {editId === id ? (
-        <li className='editing'>
+        <li className="editing">
           <form onSubmit={(event) => onSavePost(event, id)}>
-            <TextAria type='text' classValue='edit' onChange={onChange} />
+            <TextAria type="text" classValue="edit" onChange={onChange} />
           </form>
         </li>
       ) : (
         <li className={isStatus ? 'completed' : ''}>
-          <div className='view'>
-            <input
-              className='toggle'
-              type='checkbox'
-              defaultChecked={isStatus}
-              onClick={() => onStatus(id)}
-            />
+          <div className="view">
+            <input className="toggle" type="checkbox" defaultChecked={isStatus} onClick={() => onStatus(id)} />
             <label>
-              <span className='description'>{post}</span>
-              <span className='created'>created: {timer} ego </span>
+              <span className="description">{post}</span>
+              <span className="created">created: {timer} ego </span>
             </label>
-            <button
-              className='icon icon-edit'
-              disabled={isStatus}
-              onClick={() => onUpdate(id, post)}
-            ></button>
-            <button
-              className='icon icon-destroy'
-              onClick={() => onDelete(id)}
-            ></button>
+            <button className="icon icon-edit" disabled={isStatus} onClick={() => onUpdate(id, post)}></button>
+            <button className="icon icon-destroy" onClick={() => onDelete(id)}></button>
           </div>
         </li>
       )}
