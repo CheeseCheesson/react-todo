@@ -108,18 +108,18 @@ const App = () => {
   }
 
   const handelFilterItems = (name) => {
-    switch (name) {
-      case 'All':
-        setTodoItem(todoItem)
-        setFiltred(null)
-        break
-      case 'Active':
-        return setFiltred(filter(name))
-      case 'Completed':
-        return setFiltred(filter(name))
-      default:
-        break
-    }
+  switch (name) {
+    case 'All':
+      setTodoItem(todoItem)
+      setFiltred(null)
+      break
+    case 'Active':
+      return setFiltred(filter(name))
+    case 'Completed':
+      return setFiltred(filter(name))
+    default:
+      break
+  }
   }
 
   //! delete/clear

@@ -9,5 +9,6 @@
   "trailingComma": "es5",
   "endOfLine": "lf",
   "semi": false,
-  "printWidth": 120
+  "printWidth": 120,
+  "tabWidth": 2
 }
