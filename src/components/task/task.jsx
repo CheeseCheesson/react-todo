@@ -15,7 +15,6 @@ const Task = ({ id, post, onDelete, onUpdate, editId, onChange, onSavePost, onSt
   useEffect(() => {
     const intervalId = setInterval(() => timerUpdate(), 1000)
     return () => clearInterval(intervalId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -28,6 +27,7 @@ const Task = ({ id, post, onDelete, onUpdate, editId, onChange, onSavePost, onSt
         </li>
       ) : (
         <li className={isStatus ? 'completed' : ''}>
+          {console.log('isStatus', isStatus)}
           <div className="view">
             <input className="toggle" type="checkbox" defaultChecked={isStatus} onClick={() => onStatus(id)} />
             <label>

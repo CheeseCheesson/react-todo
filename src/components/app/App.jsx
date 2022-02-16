@@ -4,7 +4,7 @@ import Footer from '../footer/footer'
 import NewTaskForm from '../new-task-form'
 import TaskList from '../task-list'
 import './App.css'
-import { calcLeftItems } from '../utils/itemsLeftCounters'
+import { calcLeftItems } from '../../utils/itemsLeftCounters'
 
 const App = () => {
   //& create
@@ -60,13 +60,14 @@ const App = () => {
   }
   //* STATUS
   const handleChangeStatus = (id) => {
-    let newState = [...todoItem].map((item) => {
-      if (item.id === id) {
-        item.status = !item.status
-      }
-      return item
-    })
-    setTodoItem(newState)
+    setTodoItem((prevState) =>
+      prevState.map((item) => {
+        if (item.id === id) {
+          return { ...item, status: !item.status }
+        }
+        return item
+      })
+    )
   }
 
   //^ update
@@ -77,32 +78,46 @@ const App = () => {
   const handleEditPost = ({ target }) => {
     setEditValue(target.value)
   }
+
   const handleSavePost = (event, id) => {
     event.preventDefault()
-    let newPostEdit = [...todoItem].map((item) => {
-      if (item.id === id) {
-        item.post = editValue
-      }
-      return item
-    })
-    setTodoItem(newPostEdit)
+    setTodoItem((prevTodo) =>
+      prevTodo.map((item) => {
+        if (item.id === id) {
+          return { ...item, post: editValue }
+        }
+        return item
+      })
+    )
     setEditId(null)
   }
 
   //? footer
   const handleSelectFilter = (name) => {
-    let newActive = [...buttonValue].map((item) => {
-      if (item.name === name) {
-        item.active = !item.active
-      } else if (item.name !== name) {
-        item.active = false
-      }
-      return item
-    })
-    setButtonValue(newActive)
+    setButtonValue((prevState) =>
+      prevState.map((item) => {
+        if (item.name === name) {
+          return { ...item, active: !item.active }
+        } else if (item.name !== name) {
+          return { ...item, active: false }
+        }
+        return item
+      })
+    )
+    setFiltred((prevState) =>
+      prevState?.map((item) => {
+        if (item.name === name) {
+          return { ...item, active: !item.active }
+        } else if (item.name !== name) {
+          return { ...item, active: false }
+        }
+        return item
+      })
+    )
     handelFilterItems(name)
   }
   function filter(name) {
+    console.log(name)
     return [...todoItem].filter(
       (item) => item.status === (name === 'Active' ? false : name === 'Completed' ? true : null)
     )
@@ -128,20 +143,19 @@ const App = () => {
     if (filtred) {
       for (const item of filtred) {
         if (!item.status) {
-          setFiltred([...todoItem].filter((post) => post.id !== id && !post.status))
+          setFiltred((prevState) => prevState.filter((post) => post.id !== id && !post.status))
         }
         if (item.status) {
-          setFiltred([...todoItem].filter((post) => post.id !== id && post.status))
+          setFiltred((prevState) => prevState.filter((post) => post.id !== id && post.status))
         }
       }
     }
-    setTodoItem([...todoItem].filter((post) => post.id !== id))
+    setTodoItem((prevState) => prevState.filter((post) => post.id !== id))
   }
   const handleClear = () => {
     setTodoItem([])
-    setFiltred([])
+    setFiltred(null)
   }
-
   return (
     <section className="todoapp">
       <header className="header">
