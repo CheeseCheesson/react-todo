@@ -1,10 +1,9 @@
-/* eslint-disable */
 import React, { useState, useEffect } from 'react'
+import { formatDistanceToNow } from 'date-fns'
 
 import Footer from '../footer/footer'
 import NewTaskForm from '../new-task-form'
 import TaskList from '../task-list'
-import { formatDistanceToNow } from 'date-fns'
 import './App.css'
 import { calcLeftItems } from '../../utils/itemsLeftCounters'
 
@@ -27,16 +26,16 @@ const App = () => {
     {
       id: 2,
       name: 'Active',
-      active: false
+      active: false,
     },
     {
       id: 3,
       name: 'Completed',
-      active: false
-    }
+      active: false,
+    },
   ]
   const [buttonValue, setButtonValue] = useState(initialButton)
-const [findButton, setFindButton] = useState(null)
+  const [findButton, setFindButton] = useState(null)
   const [filtred, setFiltred] = useState()
 
   //! main
@@ -58,7 +57,7 @@ const [findButton, setFindButton] = useState(null)
           status: false,
         },
       ])
-      if(filtred){
+      if (filtred) {
         setFiltred([
           ...filtred,
           {
@@ -66,8 +65,7 @@ const [findButton, setFindButton] = useState(null)
             post: valueInput.todo,
             status: false,
           },
-        ]
-      )
+        ])
       }
       setValueInput('')
     }
@@ -82,28 +80,28 @@ const [findButton, setFindButton] = useState(null)
         return item
       })
     )
-    if(filtred){
+    if (filtred) {
       setFiltred((prevState) =>
-      prevState.map((item) => {
-        if (item.id === id) {
-          return { ...item, status: !item.status }
-        }
-        return item
-      })
-    )
+        prevState.map((item) => {
+          if (item.id === id) {
+            return { ...item, status: !item.status }
+          }
+          return item
+        })
+      )
     }
   }
-//timer
-const createdTime = new Date()
-const [timer, setTimer] = useState(formatDistanceToNow(createdTime, { includeSeconds: true }))
-const timerUpdate = () => {
-  setTimer(() => formatDistanceToNow(createdTime, { includeSeconds: true }))
-}
+  //timer
+  const createdTime = new Date()
+  const [timer, setTimer] = useState(formatDistanceToNow(createdTime, { includeSeconds: true }))
+  const timerUpdate = () => {
+    setTimer(() => formatDistanceToNow(createdTime, { includeSeconds: true }))
+  }
 
-useEffect(() => {
-  const intervalId = setInterval(() => timerUpdate(), 1000)
-  return () => clearInterval(intervalId)
-}, [])
+  useEffect(() => {
+    const intervalId = setInterval(() => timerUpdate(), 1000)
+    return () => clearInterval(intervalId)
+  }, [])
 
   //^ update
   const handleUpdatePost = (id, post) => {
@@ -125,8 +123,8 @@ useEffect(() => {
 
   //? footer
   // filter
-  const handleSelectButtonFilter = ({id, name, active}) => {
-    setFindButton({id, name, active})
+  const handleSelectButtonFilter = ({ id, name, active }) => {
+    setFindButton({ id, name, active })
     setButtonValue((prevState) =>
       prevState.map((item) => {
         if (item.name === name) {
@@ -163,10 +161,10 @@ useEffect(() => {
   //! delete/clear
   const handleDelete = (id) => {
     if (filtred) {
-    setFiltred((prevState) => prevState.filter((post) => post.id !== id))
-  }
+      setFiltred((prevState) => prevState.filter((post) => post.id !== id))
+    }
     setTodoItem((prevState) => prevState.filter((post) => post.id !== id))
-}
+  }
   const handleClear = () => {
     setTodoItem([])
     setFiltred(null)
@@ -190,8 +188,8 @@ useEffect(() => {
           onStatus={handleChangeStatus}
           filtred={filtred}
           timer={timer}
-          buttonValue = {buttonValue}
-          findButton = {findButton}
+          buttonValue={buttonValue}
+          findButton={findButton}
         />
         <Footer
           buttonValue={buttonValue}

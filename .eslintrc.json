@@ -20,8 +20,8 @@
   },
   "plugins": ["react", "prettier", "import"],
   "rules": {
-    "indent": [2, 2, {"SwitchCase": 1}],
-    "prettier/prettier":["error"],
+    "indent": [2, 2, { "SwitchCase": 1 }],
+    "prettier/prettier": 0,
     "linebreak-style": [0, "unix"],
     "quotes": ["error", "single"],
     "semi": ["error", "never"],
