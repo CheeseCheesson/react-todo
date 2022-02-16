@@ -6,7 +6,7 @@ const TaskFilter = ({ buttonValue, onChangeFilterButton }) => {
       {buttonValue &&
         buttonValue.map((item) => (
           <li key={item.id}>
-            <button className={item.active ? 'selected' : ''} onClick={() => onChangeFilterButton(item.name)}>
+            <button className={item.active ? 'selected' : ''} onClick={() => onChangeFilterButton(item)}>
               {item.name}
             </button>
           </li>
@@ -14,6 +14,7 @@ const TaskFilter = ({ buttonValue, onChangeFilterButton }) => {
     </ul>
   )
 }
+
 TaskFilter.propTypes = {
   buttonValue: PropTypes.array,
   onChangeFilterButton: PropTypes.func,

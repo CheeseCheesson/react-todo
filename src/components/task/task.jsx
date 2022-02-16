@@ -1,22 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { formatDistanceToNow } from 'date-fns'
+/* eslint-disable */
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import './task.css'
 import TextAria from '../text-aria'
 
-const Task = ({ id, post, onDelete, onUpdate, editId, onChange, onSavePost, onStatus, isStatus }) => {
-  const createdTime = new Date()
-  const [timer, setTimer] = useState(formatDistanceToNow(createdTime, { includeSeconds: true }))
-  const timerUpdate = () => {
-    setTimer(() => formatDistanceToNow(createdTime, { includeSeconds: true }))
-  }
-
-  useEffect(() => {
-    const intervalId = setInterval(() => timerUpdate(), 1000)
-    return () => clearInterval(intervalId)
-  }, [])
-
+const Task = ({ id, post, onDelete, onUpdate, editId, onChange, onSavePost, onStatus, isStatus, timer }) => {
   return (
     <>
       {editId === id ? (
@@ -27,7 +16,6 @@ const Task = ({ id, post, onDelete, onUpdate, editId, onChange, onSavePost, onSt
         </li>
       ) : (
         <li className={isStatus ? 'completed' : ''}>
-          {console.log('isStatus', isStatus)}
           <div className="view">
             <input className="toggle" type="checkbox" defaultChecked={isStatus} onClick={() => onStatus(id)} />
             <label>

@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+/* eslint-disable */
+import React, { useState, useEffect } from 'react'
 
 import Footer from '../footer/footer'
 import NewTaskForm from '../new-task-form'
 import TaskList from '../task-list'
+import { formatDistanceToNow } from 'date-fns'
 import './App.css'
 import { calcLeftItems } from '../../utils/itemsLeftCounters'
 
@@ -20,20 +22,21 @@ const App = () => {
     {
       id: 1,
       name: 'All',
-      active: false,
+      active: true,
     },
     {
       id: 2,
       name: 'Active',
-      active: false,
+      active: false
     },
     {
       id: 3,
       name: 'Completed',
-      active: false,
-    },
+      active: false
+    }
   ]
   const [buttonValue, setButtonValue] = useState(initialButton)
+const [findButton, setFindButton] = useState(null)
   const [filtred, setFiltred] = useState()
 
   //! main
@@ -55,6 +58,17 @@ const App = () => {
           status: false,
         },
       ])
+      if(filtred){
+        setFiltred([
+          ...filtred,
+          {
+            id: Date.now().toString().slice(-6),
+            post: valueInput.todo,
+            status: false,
+          },
+        ]
+      )
+      }
       setValueInput('')
     }
   }
@@ -68,7 +82,28 @@ const App = () => {
         return item
       })
     )
+    if(filtred){
+      setFiltred((prevState) =>
+      prevState.map((item) => {
+        if (item.id === id) {
+          return { ...item, status: !item.status }
+        }
+        return item
+      })
+    )
+    }
   }
+//timer
+const createdTime = new Date()
+const [timer, setTimer] = useState(formatDistanceToNow(createdTime, { includeSeconds: true }))
+const timerUpdate = () => {
+  setTimer(() => formatDistanceToNow(createdTime, { includeSeconds: true }))
+}
+
+useEffect(() => {
+  const intervalId = setInterval(() => timerUpdate(), 1000)
+  return () => clearInterval(intervalId)
+}, [])
 
   //^ update
   const handleUpdatePost = (id, post) => {
@@ -81,33 +116,21 @@ const App = () => {
 
   const handleSavePost = (event, id) => {
     event.preventDefault()
-    setTodoItem((prevTodo) =>
-      prevTodo.map((item) => {
-        if (item.id === id) {
-          return { ...item, post: editValue }
-        }
-        return item
-      })
-    )
+    const elInx = todoItem.findIndex((indx) => indx.id === id)
+    const newTodos = [...todoItem]
+    newTodos[elInx].post = editValue
+    setTodoItem(newTodos)
     setEditId(null)
   }
 
   //? footer
-  const handleSelectFilter = (name) => {
+  // filter
+  const handleSelectButtonFilter = ({id, name, active}) => {
+    setFindButton({id, name, active})
     setButtonValue((prevState) =>
       prevState.map((item) => {
         if (item.name === name) {
-          return { ...item, active: !item.active }
-        } else if (item.name !== name) {
-          return { ...item, active: false }
-        }
-        return item
-      })
-    )
-    setFiltred((prevState) =>
-      prevState?.map((item) => {
-        if (item.name === name) {
-          return { ...item, active: !item.active }
+          return { ...item, active: true }
         } else if (item.name !== name) {
           return { ...item, active: false }
         }
@@ -117,7 +140,6 @@ const App = () => {
     handelFilterItems(name)
   }
   function filter(name) {
-    console.log(name)
     return [...todoItem].filter(
       (item) => item.status === (name === 'Active' ? false : name === 'Completed' ? true : null)
     )
@@ -141,20 +163,14 @@ const App = () => {
   //! delete/clear
   const handleDelete = (id) => {
     if (filtred) {
-      for (const item of filtred) {
-        if (!item.status) {
-          setFiltred((prevState) => prevState.filter((post) => post.id !== id && !post.status))
-        }
-        if (item.status) {
-          setFiltred((prevState) => prevState.filter((post) => post.id !== id && post.status))
-        }
-      }
-    }
-    setTodoItem((prevState) => prevState.filter((post) => post.id !== id))
+    setFiltred((prevState) => prevState.filter((post) => post.id !== id))
   }
+    setTodoItem((prevState) => prevState.filter((post) => post.id !== id))
+}
   const handleClear = () => {
     setTodoItem([])
     setFiltred(null)
+    setButtonValue(initialButton)
   }
   return (
     <section className="todoapp">
@@ -173,10 +189,13 @@ const App = () => {
           onSavePost={handleSavePost}
           onStatus={handleChangeStatus}
           filtred={filtred}
+          timer={timer}
+          buttonValue = {buttonValue}
+          findButton = {findButton}
         />
         <Footer
           buttonValue={buttonValue}
-          onChangeFilterButton={handleSelectFilter}
+          onChangeFilterButton={handleSelectButtonFilter}
           countLeft={calcLeftItems(todoItem)}
           onClear={handleClear}
         />

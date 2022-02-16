@@ -21,7 +21,7 @@
   "plugins": ["react", "prettier", "import"],
   "rules": {
     "indent": [2, 2, {"SwitchCase": 1}],
-    "prettier/prettier":["error", {"singleQuote": true, "parser": "flow"}],
+    "prettier/prettier":["error"],
     "linebreak-style": [0, "unix"],
     "quotes": ["error", "single"],
     "semi": ["error", "never"],
