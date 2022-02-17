@@ -41,6 +41,7 @@ const App = () => {
   //! main
   const handleInputChange = ({ target }) => {
     let { name, value } = target
+   
     setValueInput((prevState) => ({
       ...prevState,
       [name]: value,
@@ -48,7 +49,7 @@ const App = () => {
   }
   const handleSubmit = (event) => {
     event.preventDefault()
-    if (valueInput) {
+    if (valueInput.todo && valueInput.todo.trim().length) {
       setTodoItem([
         ...todoItem,
         {
@@ -67,8 +68,8 @@ const App = () => {
           },
         ])
       }
-      setValueInput('')
     }
+    setValueInput('')
   }
   //* STATUS
   const handleChangeStatus = (id) => {
@@ -188,7 +189,6 @@ const App = () => {
           onStatus={handleChangeStatus}
           filtred={filtred}
           timer={timer}
-          buttonValue={buttonValue}
           findButton={findButton}
         />
         <Footer

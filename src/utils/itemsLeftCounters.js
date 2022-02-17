@@ -1,11 +1,3 @@
-export function calcLeftItems(mock) {
-  return (
-    mock.length -
-    mock.reduce((acc, item) => {
-      if (item.status) {
-        acc++
-      }
-      return acc
-    }, 0)
-  )
+export function calcLeftItems(array) {
+  if(array) return array.filter((item) => !item.status).length
 }
