@@ -59,6 +59,10 @@ const App = () => {
         },
       ])
       if (filtred) {
+        if( findButton.name === 'Completed') {
+          setValueInput('')
+          return
+        }
         setFiltred([
           ...filtred,
           {
