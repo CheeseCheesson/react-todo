@@ -4,13 +4,13 @@ import PropTypes from 'prop-types'
 import './task.css'
 import TextAria from '../text-aria'
 
-const Task = ({ id, post, onDelete, onUpdate, editId, onChange, onSavePost, onStatus, isStatus, timer }) => {
+const Task = ({ id, post, onDelete, onUpdate, editId, valueInput, onChange, onSavePost, onStatus, isStatus, timer }) => {
   return (
     <>
       {editId === id ? (
         <li className="editing">
           <form onSubmit={(event) => onSavePost(event, id)}>
-            <TextAria type="text" classValue="edit" onChange={onChange} />
+            <TextAria type="text" classValue="edit" value={valueInput} onChange={onChange} />
           </form>
         </li>
       ) : (
