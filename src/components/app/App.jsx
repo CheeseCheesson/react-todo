@@ -127,10 +127,10 @@ const App = () => {
     const newTodos = [...todoItem]
     newTodos[elInx].post = editValue
     setTodoItem(newTodos)
-    setEditId(null)
+    setEditId(false)
   }
 
-  //! footer
+  //? footer
   // filter
   const handleSelectButtonFilter = ({ id, name, active }) => {
     setFindButton({ id, name, active })

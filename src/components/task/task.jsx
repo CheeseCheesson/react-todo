@@ -17,7 +17,7 @@ const Task = ({ id, post, onSavePost, onDelete, onStatus, isStatus, timer }) => 
   }
   return (
     <>
-      {editId === id ? (
+      {editId ? (
         <li className="editing">
           <form onSubmit={(event) => onSavePost(event, id, editValue, setEditId)}>
             <TextAria  type="text" classValue="edit" value={editValue} onChange={handleEditPost} />
