@@ -1,5 +1,3 @@
-
-
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -9,10 +7,6 @@ import './task-list.css'
 const TaskList = ({
   posts,
   onDelete,
-  onUpdate,
-  editId,
-  onChange,
-  valueInput,
   onSavePost,
   onStatus,
   filtred,
@@ -31,11 +25,7 @@ const TaskList = ({
               post={item.post}
               isStatus={item.status}
               onDelete={onDelete}
-              onUpdate={onUpdate}
-              onChange={onChange}
               onSavePost={onSavePost}
-              editId={editId}
-              valueInput={valueInput}
               onStatus={onStatus}
               timer={timer}
             />
@@ -44,8 +34,6 @@ const TaskList = ({
       }
     </ul>
   )
-
- 
 }
 Task.propTypes = {
   posts: PropTypes.array,

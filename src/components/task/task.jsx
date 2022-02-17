@@ -1,16 +1,26 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 
 import './task.css'
 import TextAria from '../text-aria'
 
-const Task = ({ id, post, onDelete, onUpdate, editId, valueInput, onChange, onSavePost, onStatus, isStatus, timer }) => {
+const Task = ({ id, post, onSavePost, onDelete, onStatus, isStatus, timer }) => {
+  //^ update
+  const [editId, setEditId] = useState(null)
+  const [editValue, setEditValue] = useState('')
+  const handleUpdatePost = (id, post) => {
+    setEditId(id)
+    setEditValue(post)
+  }
+  const handleEditPost = ({ target }) => {
+    setEditValue(target.value)
+  }
   return (
     <>
       {editId === id ? (
         <li className="editing">
-          <form onSubmit={(event) => onSavePost(event, id)}>
-            <TextAria  type="text" classValue="edit" value={valueInput} onChange={onChange} />
+          <form onSubmit={(event) => onSavePost(event, id, editValue, setEditId)}>
+            <TextAria  type="text" classValue="edit" value={editValue} onChange={handleEditPost} />
           </form>
         </li>
       ) : (
@@ -21,7 +31,7 @@ const Task = ({ id, post, onDelete, onUpdate, editId, valueInput, onChange, onSa
               <span className="description">{post}</span>
               <span className="created">created: {timer} ego </span>
             </label>
-            <button className="icon icon-edit" disabled={isStatus} onClick={() => onUpdate(id, post)}></button>
+            <button className="icon icon-edit" disabled={isStatus} onClick={() => handleUpdatePost(id, post)}></button>
             <button className="icon icon-destroy" onClick={() => onDelete(id)}></button>
           </div>
         </li>

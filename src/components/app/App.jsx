@@ -13,9 +13,7 @@ const App = () => {
     todo: '',
   })
   const [todoItem, setTodoItem] = useState([])
-  //^ edit/update
-  const [editId, setEditId] = useState(null)
-  const [editValue, setEditValue] = useState('')
+
   //* filter
   const initialButton = [
     {
@@ -119,26 +117,20 @@ const App = () => {
     return () => clearInterval(intervalId)
   }, [])
 
+
   //^ update
-
-  const handleUpdatePost = (id, post) => {
-    setEditId(id)
-    setEditValue(post)
-  }
-  const handleEditPost = ({ target }) => {
-    setEditValue(target.value)
-  }
-
-  const handleSavePost = (event, id) => {
+  const handleSavePost = (event, id, editValue, editId) => {
+    console.log('click')
+    
     event.preventDefault()
     const elInx = todoItem.findIndex((indx) => indx.id === id)
     const newTodos = [...todoItem]
     newTodos[elInx].post = editValue
     setTodoItem(newTodos)
-    setEditId(null)
+    editId =null 
   }
 
-  //? footer
+  //! footer
   // filter
   const handleSelectButtonFilter = ({ id, name, active }) => {
     setFindButton({ id, name, active })
@@ -154,7 +146,6 @@ const App = () => {
     )
     handelFilterItems(name)
   }
-  
   
   function filter(name) {
     if(name === 'Active'){
@@ -205,10 +196,6 @@ const App = () => {
           posts={todoItem}
           filtred={filtred}
           onDelete={handleDelete}
-          onUpdate={handleUpdatePost}
-          editId={editId}
-          onChange={handleEditPost}
-          valueInput={editValue}
           onSavePost={handleSavePost}
           onStatus={handleChangeStatus}
           timer={timer}
