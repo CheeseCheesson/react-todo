@@ -90,6 +90,17 @@ const App = () => {
           return item
         })
       )
+      if(findButton.name === 'Completed')  {
+        setFiltred((prevState) =>
+          prevState.filter((item) => item.status === true)
+        )
+      }
+      if(findButton.name === 'Active'){
+        setFiltred((prevState) =>
+          prevState.filter((item) => item.status === false)
+        )
+      }
+
     }
   }
   //timer
@@ -142,12 +153,15 @@ const App = () => {
   
   
   function filter(name) {
-    return [...todoItem].filter(
-      (item) => item.status === (name === 'Active' ? false : name === 'Completed' ? true : null)
-    )
+    if(name === 'Active'){
+      return [...todoItem].filter(
+        (item) => item.status === false)
+    }
+    if(name === 'Completed'){
+      return [...todoItem].filter(
+        (item) => item.status === true)
+    }
   }
-
-  useEffect(() => {filter()}, [todoItem])
 
   const handelFilterItems = (name) => {
     switch (name) {
@@ -193,10 +207,8 @@ const App = () => {
           valueInput={editValue}
           onSavePost={handleSavePost}
           onStatus={handleChangeStatus}
-
           timer={timer}
           findButton={findButton}
-
         />
         <Footer
           buttonValue={buttonValue}
