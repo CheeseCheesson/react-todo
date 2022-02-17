@@ -119,7 +119,7 @@ const App = () => {
 
 
   //^ update
-  const handleSavePost = (event, id, editValue, editId) => {
+  const handleSavePost = (event, id, editValue, setEditId) => {
     console.log('click')
     
     event.preventDefault()
@@ -127,7 +127,7 @@ const App = () => {
     const newTodos = [...todoItem]
     newTodos[elInx].post = editValue
     setTodoItem(newTodos)
-    editId =null 
+    setEditId(null)
   }
 
   //! footer
