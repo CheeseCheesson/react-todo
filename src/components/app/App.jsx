@@ -105,6 +105,7 @@ const App = () => {
   }, [])
 
   //^ update
+
   const handleUpdatePost = (id, post) => {
     setEditId(id)
     setEditValue(post)
@@ -138,11 +139,15 @@ const App = () => {
     )
     handelFilterItems(name)
   }
+  
+  
   function filter(name) {
     return [...todoItem].filter(
       (item) => item.status === (name === 'Active' ? false : name === 'Completed' ? true : null)
     )
   }
+
+  useEffect(() => {filter()}, [todoItem])
 
   const handelFilterItems = (name) => {
     switch (name) {
@@ -180,6 +185,7 @@ const App = () => {
       <section className="main">
         <TaskList
           posts={todoItem}
+          filtred={filtred}
           onDelete={handleDelete}
           onUpdate={handleUpdatePost}
           editId={editId}
@@ -187,9 +193,10 @@ const App = () => {
           valueInput={editValue}
           onSavePost={handleSavePost}
           onStatus={handleChangeStatus}
-          filtred={filtred}
+
           timer={timer}
           findButton={findButton}
+
         />
         <Footer
           buttonValue={buttonValue}

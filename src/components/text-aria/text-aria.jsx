@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const TextAria = ({ name, value, type, classValue, placeHolder, onChange }) => {
+const TextAria = ({ name, value, type, classValue, placeHolder, onChange}) => {
   return (
     <input
       onChange={onChange}
@@ -11,6 +11,7 @@ const TextAria = ({ name, value, type, classValue, placeHolder, onChange }) => {
       value={value}
       type={type}
       autoFocus
+      required
     />
   )
 }
