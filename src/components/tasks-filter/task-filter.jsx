@@ -1,12 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-const TaskFilter = ({ buttonValue, onChangeFilterButton }) => {
+import './task-filter.css'
+const TaskFilter = ({onButtonState, buttonFilter}) => {
+  const buttons = [
+    {name: 'All', state: 'all', check: true},
+    {name: 'Active', state: 'active', check: false},
+    {name: 'Completed', state: 'completed', check: false},
+  ]
+
   return (
     <ul className="filters">
-      {buttonValue &&
-        buttonValue.map((item) => (
-          <li key={item.id}>
-            <button className={item.active ? 'selected' : ''} onClick={() => onChangeFilterButton(item)}>
+      {
+        buttons.map((item) => (              
+          <li key={item.name}>
+            <button className={item.state ===buttonFilter  ? 'selected' : ''} onClick = {() => onButtonState(item.state)}> 
               {item.name}
             </button>
           </li>
@@ -14,9 +21,12 @@ const TaskFilter = ({ buttonValue, onChangeFilterButton }) => {
     </ul>
   )
 }
-
+TaskFilter.defaultProps = {
+  buttonFilter: 'all',
+  onFilterChange: () => {},
+}
 TaskFilter.propTypes = {
-  buttonValue: PropTypes.array,
-  onChangeFilterButton: PropTypes.func,
+  onButtonState:PropTypes.func,
+  buttonFilter: PropTypes.string
 }
 export default TaskFilter

@@ -1,54 +1,92 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
-
+import { formatDistanceToNow } from 'date-fns'
 import './task.css'
-import TextAria from '../text-aria'
 
-const Task = ({ id, post, onSavePost, onDelete, onStatus, isStatus, timer }) => {
-  //^ update
-  const [editId, setEditId] = useState(null)
-  const [editValue, setEditValue] = useState('')
-  const handleUpdatePost = (id, post) => {
-    setEditId(id)
-    setEditValue(post)
+const Task = ({ id, post, status, edit, todo, setTodoItem, onDelete, onSetEdit, onStatus, buttonFilter}) => {
+  const [date, setTime] = useState(new Date())
+  const timer = formatDistanceToNow(date, { includeSeconds: true })
+  const getTime = () => {
+    setTime(date)
   }
-  const handleEditPost = ({ target }) => {
+  useEffect(()=>{
+    const idTime = setInterval(()=> getTime(), 1000)
+    return () => clearInterval(idTime)
+  } )
+  const [editValue, setEditValue] = useState(post)
+  const handleChange = ({target}) => {
     setEditValue(target.value)
   }
+  const  handleSaveEdit = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      if(editValue.trim()){
+        const elInx = todo.findIndex((indx) => indx.id === id)
+        const newTodos = [...todo]
+        newTodos[elInx].post = editValue
+        newTodos[elInx].edit = false
+        setTodoItem(newTodos)
+      }
+    } else if(event.key === 'Escape'|| event.key === 'Esc') {
+      setTodoItem((prevState) =>
+        prevState.map((item) => {
+          return {...item, edit: false}
+        })
+      )
+    }
+  }
+  let classNames
+  if (!status) {
+    classNames = 'completed' 
+    if (buttonFilter === 'active') {
+      classNames += ' hidden'
+    } else {
+      classNames = 'completed'
+    }
+  };
+  if (buttonFilter === 'completed' && classNames !== 'completed') {
+    classNames = 'hidden'
+  };
+  if (edit) {
+    classNames = 'editing'
+  };
   return (
-    <>
-      {editId ? (
-        <li className="editing">
-          <form onSubmit={(event) => onSavePost(event, id, editValue, setEditId)}>
-            <TextAria  type="text" classValue="edit" value={editValue} onChange={handleEditPost} />
-          </form>
-        </li>
-      ) : (
-        <li className={isStatus ? 'completed' : ''}>
-          <div className="view">
-            <input className="toggle" type="checkbox" defaultChecked={isStatus} onClick={() => onStatus(id)} />
-            <label>
-              <span className="description">{post}</span>
-              <span className="created">created: {timer} ego </span>
-            </label>
-            <button className="icon icon-edit" disabled={isStatus} onClick={() => handleUpdatePost(id, post)}></button>
-            <button className="icon icon-destroy" onClick={() => onDelete(id)}></button>
-          </div>
-        </li>
-      )}
-    </>
+    <li className= {classNames}>
+      <div className="view">
+        <input className="toggle" type="checkbox" defaultChecked={!status} onClick={(()=> onStatus(id))}/>
+        <label>
+          <span className="description">{post}</span>
+          <span className="created">created: {timer} ago</span>
+        </label>
+        <button className="icon icon-edit" onClick={() => onSetEdit(id)}></button>
+        <button className="icon icon-destroy" onClick={()=>onDelete(id)} ></button>
+      </div>
+      {edit ? <form onKeyDown={handleSaveEdit}><input type="text" className="edit" required value={editValue} onChange={handleChange}/></form> : ''}
+    </li>
   )
+}
+Task.defaultProps = {
+  id: '',
+  post: '',
+  status: false,
+  edit: false,
+  todo:[],
+  buttonFilter: 'all',
+  setTodoItem: ()=>{},
+  onDelete: () => {},
+  onSetEdit: () => {},
+  onStatus: () => {},
 }
 Task.propTypes = {
   id: PropTypes.string,
   post: PropTypes.string,
-  editId: PropTypes.string,
-  isStatus: PropTypes.bool,
-  valueInput: PropTypes.string,
+  status: PropTypes.bool,
+  edit: PropTypes.bool,
+  todo: PropTypes.array,
+  setTodoItem: PropTypes.func,
   onDelete: PropTypes.func,
-  onUpdate: PropTypes.func,
-  onChange: PropTypes.func,
-  onSavePost: PropTypes.func,
+  onSetEdit: PropTypes.func,
   onStatus: PropTypes.func,
+  buttonFilter: PropTypes.string,
 }
 export default Task
